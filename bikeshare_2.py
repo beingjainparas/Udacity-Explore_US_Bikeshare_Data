@@ -1,3 +1,9 @@
+# This are the links that i used to take help for solving the below project.
+# https://www.python-course.eu/python3_input.php
+# https://stackoverflow.com/questions/23294658/asking-the-user-for-input-until-they-give-a-valid-response
+# https://stackoverflow.com/questions/2847386/python-string-and-integer-concatenation
+# https://stackoverflow.com/questions/19377969/combine-two-columns-of-text-in-dataframe-in-pandas-python
+
 import time
 import pandas as pd
 import numpy as np
@@ -22,33 +28,33 @@ def get_filters():
     print('Hello! Let\'s explore some US bikeshare data!')
     # TO DO: get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
     city_name = ''
-    while city_name not in CITY_DATA:
+    while city_name.lower() not in CITY_DATA:
         city_name = input("\nWhat is the name of the city to analyze data? (E.g. Input either chicago, new york city, washington)\n")
-        if city_name in CITY_DATA:
+        if city_name.lower() in CITY_DATA:
             #We were able to get the name of the city to analyze data.
-            city = CITY_DATA[city_name]
+            city = CITY_DATA[city_name.lower()]
         else:
             #We were not able to get the name of the city to analyze data so we continue the loop.
             print("Sorry we were not able to get the name of the city to analyze data, Please input either chicago, new york city or washington.\n")
 
     # TO DO: get user input for month (all, january, february, ... , june)
     month_name = ''
-    while month_name not in MONTH_DATA:
+    while month_name.lower() not in MONTH_DATA:
         month_name = input("\nWhat is the name of the month to filter data? (E.g. Input either 'all' to apply no month filter or january, february, ... , june)\n")
-        if month_name in MONTH_DATA:
+        if month_name.lower() in MONTH_DATA:
             #We were able to get the name of the month to analyze data.
-            month = month_name
+            month = month_name.lower()
         else:
             #We were not able to get the name of the month to analyze data so we continue the loop.
             print("Sorry we were not able to get the name of the month to filter data, Please input either 'all' to apply no month filter or january, february, ... , june.\n")
 
     # TO DO: get user input for day of week (all, monday, tuesday, ... sunday)
     day_name = ''
-    while day_name not in DAY_DATA:
+    while day_name.lower() not in DAY_DATA:
         day_name = input("\nWhat is the name of the day to filter data? (E.g. Input either 'all' to apply no day filter or monday, tuesday, ... sunday)\n")
-        if day_name in DAY_DATA:
+        if day_name.lower() in DAY_DATA:
             #We were able to get the name of the month to analyze data.
-            day = day_name
+            day = day_name.lower()
         else:
             #We were not able to get the name of the month to analyze data so we continue the loop.
             print("Sorry we were not able to get the name of the day to filter data, Please input either 'all' to apply no day filter or monday, tuesday, ... sunday.\n")
@@ -201,6 +207,22 @@ def user_stats(df, city):
     print('-'*40)
 
 
+def display_raw_data(df):
+    """Displays raw data on user request.
+
+    Args:
+        (DataFrame) df - Pandas DataFrame containing city data filtered by month and day
+    """
+    print(df.head())
+    next = 0
+    while True:
+        view_raw_data = input('\nWould you like to view next five row of raw data? Enter yes or no.\n')
+        if view_raw_data.lower() != 'yes':
+            return
+        next = next + 5
+        print(df.iloc[next:next+5])
+
+
 def main():
     while True:
         city, month, day = get_filters()
@@ -210,6 +232,12 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df, city)
+        while True:
+            view_raw_data = input('\nWould you like to view first five row of raw data? Enter yes or no.\n')
+            if view_raw_data.lower() != 'yes':
+                break
+            display_raw_data(df)
+            break
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
