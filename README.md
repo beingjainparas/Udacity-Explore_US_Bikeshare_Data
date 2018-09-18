@@ -54,7 +54,7 @@ I learned about bike share use in Chicago, New York City, and Washington by comp
 * Run the project
     * Open the terminal
     * And run
-    ```python bikeshare.py```
+    ```python bikeshare_2.py```
 
 # Extra Links that halped me solve the project are:
 * https://www.python-course.eu/python3_input.php
